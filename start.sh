@@ -29,6 +29,7 @@ cd dirname/minecraftbe/servername
 if [ -d "worlds" ]; then
     echo "Backing up server (to minecraftbe/servername/backups folder)"
     tar -pzvcf backups/$(date +%Y.%m.%d.%H.%M.%S).tar.gz worlds
+    [ ! -z "$MINECRAFTBE_s3_URI" ] && aws s3 mv backups $MINECRAFTBE_s3_URI --recursive --storage-class STANDARD_IA
 fi
 
 # Rotate backups -- keep most recent 10
